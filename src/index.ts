@@ -44,7 +44,7 @@ export const validateHS = (host: string) =>
     prefixFetch(host)('/_matrix/client/versions')
         .then(parseJSON)
         .then(x => VersionSchema.isValid(x))
-        .then(isTrue(() => host, new Error('Host versions file incorrect')));
+        .then(isTrue(() => host, 'Host versions file incorrect'));
 
 /*
  * Discovers the correct domain name for the host according to the spec's
@@ -168,3 +168,19 @@ export async function getEvent(
         .then(yupCast(EventSchema));
 }
 
+/*
+ * Gets an mxc resource
+ */
+export function convertMXCtoMediaQuery(
+  clientURL: string,
+  mxc: string,
+): string {
+    // mxc://matrix.org/EqMZYbAYhREvHXvYFyfxOlkf
+    const matches = mxc.match(/mxc:\/\/(.+)\/(.+)/)
+    if (!matches) {
+      throw new Error(`mxc invalid: ${{mxc}}`);
+    }
+
+
+    return `${clientURL}/_matrix/media/r0/download/${matches[1]}/${matches[2]}`;
+}
