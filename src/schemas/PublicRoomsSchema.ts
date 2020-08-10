@@ -16,7 +16,7 @@ limitations under the License.
 
 import { object, array, string, boolean, number, InferType } from 'yup';
 
-export const PublicRoomsChunkSchema = object({
+export const RoomSchema = object({
   aliases: array().of(string().required()),
   canonical_alias: string(),
   name: string(),
@@ -29,13 +29,13 @@ export const PublicRoomsChunkSchema = object({
 }).required();
 
 const PublicRoomsSchema = object({
-  chunk: array().of(PublicRoomsChunkSchema.required()).required(),
+  chunk: array().of(RoomSchema.required()).required(),
   next_batch: string(),
   prev_batch: string(),
   total_room_count_estimate: number(),
 }).required();
 
-export type PublicRoomsChunk = InferType<typeof PublicRoomsChunkSchema>;
+export type Room = InferType<typeof RoomSchema>;
 export type PublicRooms = InferType<typeof PublicRoomsSchema>;
 
 export default PublicRoomsSchema;

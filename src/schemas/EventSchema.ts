@@ -19,7 +19,12 @@ import { object, string, InferType } from 'yup';
 const EventSchema = object({
   content: object().required(),
   type: string().required(),
+  event_id: string().required(),
+  sender: string().required(),
+  origin_server_ts: string().required(),
+  unsigned: object(),
+  room_id: string().required(),
 }).required()
 
-export type EventType = InferType<typeof EventSchema>;
+export type Event = InferType<typeof EventSchema>;
 export default EventSchema;

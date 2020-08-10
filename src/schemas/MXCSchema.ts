@@ -13,14 +13,3 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
-import { object, string, InferType } from 'yup';
-
-const UserSchema = object({
-  avatar_url: string().required(),
-  displayname: string().required(),
-}).required()
-
-export type User = InferType<typeof UserSchema>;
-export default UserSchema;
-

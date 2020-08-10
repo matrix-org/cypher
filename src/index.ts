@@ -16,16 +16,16 @@ limitations under the License.
 
 import VersionSchema from './schemas/VersionSchema';
 import WellKnownSchema from './schemas/WellKnownSchema';
-import UserSchema, { UserType } from './schemas/UserSchema';
+import UserSchema, { User } from './schemas/UserSchema';
 import RoomAliasSchema, {
     RoomAliasSchemaType,
 } from './schemas/RoomAliasSchema';
 import PublicRoomsSchema, {
     PublicRooms,
-    PublicRoomsChunk,
+    Room,
 } from './schemas/PublicRoomsSchema';
 import EventSchema, {
-    EventType,
+    Event,
 } from './schemas/EventSchema';
 
 
@@ -33,7 +33,7 @@ import { isTrue, ensure, yupCast, any } from './utils/promises';
 import { prefixFetch, parseJSON } from './utils/fetch';
 
 /*
- * A client is a resolved homeserver name wrapped in a lambdad fetch
+ * A client is a resolved homeserver name wrapped in a lambda'd fetch
  */
 export type Client = (path: string) => Promise<Response>;
 
@@ -87,7 +87,7 @@ export async function client(host: string): Promise<Client> {
 export function getUserDetails(
     client: Client,
     userId: string,
-): Promise<UserType> {
+): Promise<User> {
     return client(`/_matrix/client/r0/profile/${userId}`)
         .then(parseJSON)
         .then(yupCast(UserSchema))
@@ -140,7 +140,7 @@ export function getPublicRoomsUnsafe(client: Client): Promise<PublicRooms> {
 export async function searchPublicRooms(
     client: Client,
     roomId: string,
-): Promise<PublicRoomsChunk> {
+): Promise<Room> {
     // we use the unsage version here because the safe one is sloooow
     return getPublicRoomsUnsafe(client)
         .then(rooms => {
@@ -162,7 +162,7 @@ export async function getEvent(
     client: Client,
     roomIdOrAlias: string,
     eventId: string,
-): Promise<EventType> {
+): Promise<Event> {
     return client(`/_matrix/client/r0/rooms/${roomIdOrAlias}/event/${eventId}`)
         .then(parseJSON)
         .then(yupCast(EventSchema));
