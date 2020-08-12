@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// @ts-ignore
+import any from 'promise.any';
+any.shim()
+
 import VersionSchema from './schemas/VersionSchema';
 import WellKnownSchema from './schemas/WellKnownSchema';
 import UserSchema, { User } from './schemas/UserSchema';
@@ -27,10 +31,9 @@ import PublicRoomsSchema, {
 import EventSchema, {
     Event,
 } from './schemas/EventSchema';
-
-
-import { isTrue, ensure, yupCast, any } from './utils/promises';
+import { ensure } from './utils/promises';
 import { prefixFetch, parseJSON } from './utils/fetch';
+
 
 /*
  * A client is a resolved homeserver name wrapped in a lambda'd fetch
@@ -43,8 +46,8 @@ export type Client = (path: string) => Promise<Response>;
 export const validateHS = (host: string) =>
     prefixFetch(host)('/_matrix/client/versions')
         .then(parseJSON)
-        .then(x => VersionSchema.isValid(x))
-        .then(isTrue(() => host, 'Host versions file incorrect'));
+        .then(VersionSchema.parse)
+        .then(() => host);
 
 /*
  * Discovers the correct domain name for the host according to the spec's
@@ -54,7 +57,7 @@ export const discoverServer = (host: string) =>
     prefixFetch(host)('/.well-known/matrix/client')
         .then(resp => resp.ok
             ? resp.json()
-                .then(yupCast(WellKnownSchema))
+                .then(WellKnownSchema.parse)
                 .then(content => {
                     if (content === undefined) return host;
                     else if (
@@ -90,7 +93,7 @@ export function getUserDetails(
 ): Promise<User> {
     return client(`/_matrix/client/r0/profile/${userId}`)
         .then(parseJSON)
-        .then(yupCast(UserSchema))
+        .then(UserSchema.parse)
 }
 
 /*
@@ -103,14 +106,15 @@ export function getRoomIdFromAlias(
     const encodedRoomAlias = encodeURIComponent(roomAlias);
     return client(`/_matrix/client/r0/directory/room/${encodedRoomAlias}`)
         .then(parseJSON)
-        .then(yupCast(RoomAliasSchema));
+        .then(RoomAliasSchema.parse);
 }
 
 /*
  * Gets the details of a room if that room is public
  */
-export function getRoomDetails(clients: Client[], roomId: string) {
-    return any(clients.map(client => searchPublicRooms(client, roomId)));
+export function getRoomDetails(clients: Client[], roomId: string): Promise<Room> {
+    // @ts-ignore
+    return Promise.any(clients.map(client => searchPublicRooms(client, roomId)));
 }
 
 /*
@@ -118,7 +122,7 @@ export function getRoomDetails(clients: Client[], roomId: string) {
  */
 export function getPublicRooms(client: Client): Promise<PublicRooms> {
     return getPublicRoomsUnsafe(client)
-        .then(yupCast(PublicRoomsSchema))
+        .then(PublicRoomsSchema.parse)
 }
 
 /*
@@ -137,7 +141,7 @@ export function getPublicRoomsUnsafe(client: Client): Promise<PublicRooms> {
 /*
  * Searches the public rooms of a homeserver for the metadata of a particular
  */
-export async function searchPublicRooms(
+export function searchPublicRooms(
     client: Client,
     roomId: string,
 ): Promise<Room> {
@@ -165,7 +169,7 @@ export async function getEvent(
 ): Promise<Event> {
     return client(`/_matrix/client/r0/rooms/${roomIdOrAlias}/event/${eventId}`)
         .then(parseJSON)
-        .then(yupCast(EventSchema));
+        .then(EventSchema.parse);
 }
 
 /*

@@ -14,29 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { object, array, string, boolean, number, InferType } from 'yup';
+import { object, array, string, boolean, number, TypeOf } from 'zod';
 
 export const RoomSchema = object({
-  aliases: array().of(string().required()),
-  canonical_alias: string(),
-  name: string(),
-  num_joined_members: number().required(),
-  room_id: string().required(),
-  topic: string(),
-  world_readable: boolean().required(),
-  guest_can_join: boolean().required(),
-  avatar_url: string(),
-}).required();
+  aliases: array(string()).optional(),
+  canonical_alias: string().optional(),
+  name: string().optional(),
+  num_joined_members: number(),
+  room_id: string(),
+  topic: string().optional(),
+  world_readable: boolean(),
+  guest_can_join: boolean(),
+  avatar_url: string().optional(),
+});
+
 
 const PublicRoomsSchema = object({
-  chunk: array().of(RoomSchema.required()).required(),
-  next_batch: string(),
-  prev_batch: string(),
-  total_room_count_estimate: number(),
-}).required();
+  chunk: array(RoomSchema),
+  next_batch: string().optional(),
+  prev_batch: string().optional(),
+  total_room_count_estimate: number().optional(),
+});
 
-export type Room = InferType<typeof RoomSchema>;
-export type PublicRooms = InferType<typeof PublicRoomsSchema>;
+export type Room = TypeOf<typeof RoomSchema>;
+export type PublicRooms = TypeOf<typeof PublicRoomsSchema>;
 
 export default PublicRoomsSchema;
 

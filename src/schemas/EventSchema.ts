@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { object, string, InferType } from 'yup';
+import { object, string, TypeOf } from 'zod';
 
 const EventSchema = object({
-  content: object().required(),
-  type: string().required(),
-  event_id: string().required(),
-  sender: string().required(),
-  origin_server_ts: string().required(),
-  unsigned: object(),
-  room_id: string().required(),
-}).required()
+  content: object({}).nonstrict(),
+  type: string(),
+  event_id: string(),
+  sender: string(),
+  origin_server_ts: string(),
+  unsigned: object({}).nonstrict().optional(),
+  room_id: string(),
+});
 
-export type Event = InferType<typeof EventSchema>;
+export type Event = TypeOf<typeof EventSchema>;
 export default EventSchema;

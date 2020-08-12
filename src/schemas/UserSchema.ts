@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { object, string, InferType } from 'yup';
+import { object, string, TypeOf } from 'zod';
 
 const UserSchema = object({
-  avatar_url: string().required(),
-  displayname: string().required(),
-}).required()
+  avatar_url: string(),
+  displayname: string(),
+})
 
-export type User = InferType<typeof UserSchema>;
+export type User = TypeOf<typeof UserSchema>;
 export default UserSchema;
 

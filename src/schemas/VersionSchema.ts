@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { object, string, array } from 'yup';
+import { object, string, array } from 'zod';
 
 export default object({
-  versions: array().required().of(string().required()),
-}).required()
+  versions: array(string()),
+}).nonstrict()

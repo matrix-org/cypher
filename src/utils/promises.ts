@@ -14,32 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Schema } from 'yup';
-
-/*
- * Returns a lambda which validates the argument against the yup schema
- * and casts it to the correct type.
- *
- * Usefull for getting type checking from external data
- */
-export function yupCast<T>(yupSchema: Schema<T>) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (v: any) =>
-        yupSchema.isValid(v).then(isTrue(() => yupSchema.cast(v)));
-}
-
-
-/*
- * Returns a lambda which casts the json to the correct type. This is unsafe.
- *
- * Usefull for getting type checking from external data
- */
-export function unsafeYupCast<T>(yupSchema: Schema<T>) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (v: any) => yupSchema.cast(v);
-}
-
-
 /*
  * Conditional promises
  */
@@ -52,18 +26,6 @@ export function ensure<T>(condition: boolean, resultThunk: () => T | PromiseLike
     return condition
         ? Promise.resolve(resultThunk())
         : Promise.reject(new Error(rejectReason));
-}
-
-/*
- * Same as ensure but acts like a lambda
- * ```
- * Promise.resolve(true)
- *   .then(isTrue(() => "yay"))
- *   .then(console.log) // writes "yay" to console
- * ```
- */
-export function isTrue<T>(resultThunk: () => T | PromiseLike<T>, rejectReason?: string) {
-    return (condition: boolean) => ensure<T>(condition, resultThunk, rejectReason)
 }
 
 /*
@@ -96,18 +58,3 @@ export function logThens<T1, T2 = T1>(label: string) {
     return [logThen<T1>(label), logCatch<T2>(label)]
 }
 
-/*
- * Inverts a promise.
- */
-export function invert<T>(promise: Promise<T>) {
-    return new Promise<T>(
-        (resolve, reject) => Promise.resolve(promise).then(reject, resolve),
-    );
-}
-
-/*
- * Implements promise.any
- */
-export function any<T>(iterable: Promise<T>[]) {
-    return invert(Promise.all([...iterable].map(invert)));
-}

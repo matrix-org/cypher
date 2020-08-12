@@ -59,13 +59,13 @@ it('gets public room data', async () => {
     await expect(getPublicRooms(testClient))
         .resolves
         .toHaveProperty('chunk');
-});
+}, 10000);
 
 it('finds a room in public rooms', async () => {
     await expect(searchPublicRooms(testClient, '!bEWtlqtDwCLFIAKAcv:matrix.org'))
         .resolves
         .toHaveProperty('avatar_url')
-});
+}, 10000);
 
 // This will fail, the event enfpoint requires auth
 it('finds an event', async () => {

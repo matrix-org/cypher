@@ -3,16 +3,22 @@
         "target": "es5",
         "module": "commonjs",
         "sourceMap": true,
-        "outDir": "lib",
         "removeComments": true,
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "declaration": true
+        "declaration": true,
+        "declarationDir": "lib",
+        "outDir": "lib",
+        "lib": ["es2017", "ES7", "ES6", "dom"],
+        "strictNullChecks": true
+    },
+    "typedocOptions": {
+        "mode": "modules",
+        "out": "docs"
     },
     "include": [
-      "src/**/*",
-      "tests/**/*"
+      "src/**/*"
     ]
 }

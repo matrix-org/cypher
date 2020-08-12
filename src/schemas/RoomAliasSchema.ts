@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { object, array, string, InferType } from 'yup';
+import { object, array, string, TypeOf } from 'zod';
 
 const RoomAliasSchema = object({
-  room_id: string().required(),
-  servers: array().of(string()),
-}).required()
+  room_id: string().optional(),
+  servers: array(string()).optional(),
+});
 
-export type RoomAliasSchemaType = InferType<typeof RoomAliasSchema>;
+export type RoomAliasSchemaType = TypeOf<typeof RoomAliasSchema>;
 export default RoomAliasSchema;
 

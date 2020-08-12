@@ -14,11 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { object, string } from 'yup';
+import { object, string, TypeOf } from 'zod';
 
-export default object({
+const WellKnownSchema = object({
   'm.homeserver': object({
-    'base_url': string().url().required('m.homeserver must have a base url'),
+    'base_url': string().url(),
   }),
-})
+  'm.identity_server': object({
+    'base_url': string().url(),
+  }),
+});
 
+export type WellKnown = TypeOf<typeof WellKnownSchema>;
+export default WellKnownSchema;
