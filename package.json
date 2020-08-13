@@ -4,8 +4,7 @@
     "description": "Cypher is a small stateless client for the matrix ecosystem",
     "author": "Jorik Schellekens <joriksch@gmail.com>",
     "license": "Apache-2.0",
-    "main": "dist/lib/matrix-cypher.umd.js",
-    "module": "dist/lib/matrix-cypher.es5.js",
+    "main": "dist/lib/matrix-cypher.js",
     "typings": "dist/types/matrix-cypher.d.ts",
     "devDependencies": {
         "@rollup/plugin-commonjs": "^14.0.0",
