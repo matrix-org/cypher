@@ -7,7 +7,7 @@ import {
     getPublicRooms,
     searchPublicRooms,
     getEvent,
-} from './index';
+} from '../src/matrix-cypher';
 
 let testClient: Client;
 

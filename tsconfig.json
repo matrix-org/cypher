@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "commonjs",
         "sourceMap": true,
         "removeComments": true,
         "strict": true,
@@ -11,7 +10,6 @@
         "declaration": true,
         "declarationDir": "lib",
         "outDir": "lib",
-        "lib": ["es2017", "ES7", "ES6", "dom"],
         "strictNullChecks": true
     },
     "typedocOptions": {
