@@ -9,7 +9,7 @@ const pkg = require('./package.json')
 const libraryName = 'matrix-cypher'
 
 export default {
-  input: `src/${libraryName}.ts`,
+  input: `src/index.ts`,
   output: [
     { file: pkg.main, name: 'matrix-cypher', format: 'umd', sourcemap: true },
     { file: pkg.module, format: 'es', sourcemap: true },
@@ -23,7 +23,7 @@ export default {
     // Allow json resolution
     json(),
     // Compile TypeScript files
-    typescript(),
+    typescript({ useTsconfigDeclarationDir: true }),
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
     commonjs(),
     // Allow node_modules resolution, so you can use 'external' to control
