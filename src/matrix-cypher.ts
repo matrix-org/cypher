@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import any from 'promise.any';
 any.shim()
@@ -113,6 +114,7 @@ export function getRoomIdFromAlias(
  * Gets the details of a room if that room is public
  */
 export function getRoomDetails(clients: Client[], roomId: string): Promise<Room> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return Promise.any(clients.map(client => searchPublicRooms(client, roomId)));
 }
@@ -176,13 +178,13 @@ export async function getEvent(
  * Gets an mxc resource
  */
 export function convertMXCtoMediaQuery(
-  clientURL: string,
-  mxc: string,
+    clientURL: string,
+    mxc: string,
 ): string {
     // mxc://matrix.org/EqMZYbAYhREvHXvYFyfxOlkf
     const matches = mxc.match(/mxc:\/\/(.+)\/(.+)/)
     if (!matches) {
-      throw new Error(`mxc invalid: ${{mxc}}`);
+        throw new Error(`mxc invalid: ${{mxc}}`);
     }
 
 

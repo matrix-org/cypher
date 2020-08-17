@@ -4,8 +4,8 @@
     "description": "Cypher is a small stateless client for the matrix ecosystem",
     "author": "Jorik Schellekens <joriksch@gmail.com>",
     "license": "Apache-2.0",
-    "main": "lib/matrix-cypher.js",
-    "typings": "lib/matrix-cypher.d.ts",
+    "main": "lib/index.js",
+    "typings": "lib/index.d.ts",
     "devDependencies": {
         "@rollup/plugin-commonjs": "^14.0.0",
         "@rollup/plugin-json": "^4.1.0",
@@ -24,8 +24,8 @@
         "typescript": "^3.9.5"
     },
     "scripts": {
-        "build": "tsc --module commonjs && rollup -c rollup.config.ts",
-        "start": "rollup -c rollup.config.ts -w",
+        "build": "tsc",
+        "start": "tsc -w",
         "lint": "eslint src"
     },
     "husky": {

@@ -2,14 +2,14 @@
     "compilerOptions": {
         "target": "es5",
         "module":"es2015",
+        "outDir": "lib",
         "sourceMap": true,
+
         "removeComments": true,
         "strict": true,
         "esModuleInterop": true,
-        "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "declaration": true,
-        "outDir": "lib",
         "strictNullChecks": true,
         "moduleResolution": "node"
     },
