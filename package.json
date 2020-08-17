@@ -1,6 +1,6 @@
 {
     "name": "matrix-cypher",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "description": "Cypher is a small stateless client for the matrix ecosystem",
     "author": "Jorik Schellekens <joriksch@gmail.com>",
     "license": "Apache-2.0",
