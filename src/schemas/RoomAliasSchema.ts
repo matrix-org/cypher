@@ -17,10 +17,10 @@ limitations under the License.
 import { object, array, string, TypeOf } from 'zod';
 
 const RoomAliasSchema = object({
-  room_id: string().optional(),
-  servers: array(string()).optional(),
+  room_id: string(),
+  servers: array(string()),
 });
 
-export type RoomAliasSchemaType = TypeOf<typeof RoomAliasSchema>;
+export type RoomAlias = TypeOf<typeof RoomAliasSchema>;
 export default RoomAliasSchema;
 

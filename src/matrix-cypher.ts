@@ -23,7 +23,7 @@ import VersionSchema from './schemas/VersionSchema';
 import WellKnownSchema from './schemas/WellKnownSchema';
 import UserSchema, { User } from './schemas/UserSchema';
 import RoomAliasSchema, {
-    RoomAliasSchemaType,
+    RoomAlias,
 } from './schemas/RoomAliasSchema';
 import PublicRoomsSchema, {
     PublicRooms,
@@ -103,7 +103,7 @@ export function getUserDetails(
 export function getRoomIdFromAlias(
     client: Client,
     roomAlias: string,
-): Promise<RoomAliasSchemaType> {
+): Promise<RoomAlias> {
     const encodedRoomAlias = encodeURIComponent(roomAlias);
     return client(`/_matrix/client/r0/directory/room/${encodedRoomAlias}`)
         .then(parseJSON)
@@ -184,9 +184,8 @@ export function convertMXCtoMediaQuery(
     // mxc://matrix.org/EqMZYbAYhREvHXvYFyfxOlkf
     const matches = mxc.match(/mxc:\/\/(.+)\/(.+)/)
     if (!matches) {
-        throw new Error(`mxc invalid: ${{mxc}}`);
+        throw new Error(`mxc invalid: ${JSON.stringify({mxc})}`);
     }
-
 
     return `${clientURL}/_matrix/media/r0/download/${matches[1]}/${matches[2]}`;
 }
