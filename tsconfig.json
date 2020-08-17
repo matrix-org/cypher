@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module":"es2015",
+        "outDir": "lib",
+        "sourceMap": true,
+
+        "removeComments": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "declaration": true,
+        "strictNullChecks": true,
+        "moduleResolution": "node"
+    },
+    "typedocOptions": {
+        "mode": "modules",
+        "out": "docs"
+    },
+    "include": [
+      "src/**/*"
+    ]
+}

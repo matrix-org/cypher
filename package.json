@@ -1,0 +1,53 @@
+{
+    "name": "matrix-cypher",
+    "version": "0.1.13",
+    "description": "Cypher is a small stateless client for the matrix ecosystem",
+    "author": "Jorik Schellekens <joriksch@gmail.com>",
+    "license": "Apache-2.0",
+    "main": "lib/index.js",
+    "typings": "lib/index.d.ts",
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^14.0.0",
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-node-resolve": "^8.4.0",
+        "@types/jest": "^26.0.9",
+        "eslint": "^7.6.0",
+        "eslint-config-matrix-org": "^0.1.1",
+        "husky": "^4.2.5",
+        "jest": "^26.2.2",
+        "lint-staged": "^10.2.11",
+        "prettier": "^2.0.5",
+        "rollup": "^2.23.1",
+        "rollup-plugin-sourcemaps": "^0.6.2",
+        "rollup-plugin-typescript2": "^0.27.2",
+        "ts-jest": "^26.1.4",
+        "typescript": "^3.9.5"
+    },
+    "scripts": {
+        "build": "tsc",
+        "start": "tsc -w",
+        "lint": "eslint src"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "src/**/*.{ts}": [
+            "eslint --fix",
+            "prettier --write --tab-width 4",
+            "git add"
+        ]
+    },
+    "dependencies": {
+        "cross-fetch": "^3.0.5",
+        "promise.any": "^2.0.1",
+        "zod": "^1.10.2"
+    },
+    "jest": {
+        "preset": "ts-jest",
+        "testEnvironment": "node",
+        "rootDir": "test"
+    }
+}
